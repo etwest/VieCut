@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
 project(vc)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 find_package(OpenMP REQUIRED)
 find_package(MPI REQUIRED)
@@ -139,6 +139,11 @@ endif()
 
 if(RUN_TESTS)
     enable_testing()
-    add_subdirectory(extlib/googletest)
+
+    find_package(gtest)
+    if (NOT gtest_FOUND)
+        add_subdirectory(extlib/googletest)
+    endif()
+
     add_subdirectory(tests)
 endif(RUN_TESTS)
