@@ -139,11 +139,5 @@ endif()
 
 if(RUN_TESTS)
     enable_testing()
-
-    find_package(gtest)
-    if (NOT gtest_FOUND)
-        add_subdirectory(extlib/googletest)
-    endif()
-
     add_subdirectory(tests)
 endif(RUN_TESTS)
