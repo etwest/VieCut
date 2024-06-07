@@ -14,6 +14,7 @@
 #include <memory>
 #include <queue>
 #include <stack>
+#include <optional>
 #include <utility>
 #include <variant>
 #include <vector>

@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <memory>
 #include <string>
+#include <optional>
 #include <unordered_set>
 #include <utility>
 #include <variant>
