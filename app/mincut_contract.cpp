@@ -35,6 +35,7 @@
 #else
 #include "coarsening/sparsify.h"
 #endif
+using namespace VieCut;
 
 int main(int argn, char** argv) {
     static constexpr bool debug = false;

@@ -18,6 +18,7 @@
 #include "tlx/cmdline_parser.hpp"
 #include "tlx/logger.hpp"
 #include "tools/random_functions.h"
+using namespace VieCut;
 
 int main(int argn, char** argv) {
     tlx::CmdlineParser cmdl;

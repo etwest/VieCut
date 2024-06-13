@@ -34,6 +34,7 @@
 #include "tlx/logger.hpp"
 #include "tools/graph_extractor.h"
 #include "tools/timer.h"
+using namespace VieCut;
 
 int main(int argn, char** argv) {
     timer t;

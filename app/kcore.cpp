@@ -27,6 +27,7 @@
 #include "tlx/cmdline_parser.hpp"
 #include "tlx/logger.hpp"
 #include "tools/timer.h"
+using namespace VieCut;
 
 int main(int argn, char** argv) {
     static const bool debug = false;

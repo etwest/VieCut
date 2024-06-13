@@ -41,81 +41,83 @@
 #include "coarsening/label_propagation.h"
 #endif
 
-template <class GraphPtr>
-class viecut : public minimum_cut {
- public:
-    typedef GraphPtr GraphPtrType;
-    static constexpr bool debug = false;
-    bool timing = configuration::getConfig()->verbose;
-    viecut() { }
+namespace VieCut {
+    template <class GraphPtr>
+    class viecut : public minimum_cut {
+     public:
+        typedef GraphPtr GraphPtrType;
+        static constexpr bool debug = false;
+        bool timing = configuration::getConfig()->verbose;
+        viecut() { }
 
-    virtual ~viecut() { }
+        virtual ~viecut() { }
 
-    EdgeWeight perform_minimum_cut(GraphPtr G) {
-        return perform_minimum_cut(G, false);
-    }
-
-    EdgeWeight perform_minimum_cut(GraphPtr G,
-                                   bool indirect) {
-        if (!G) {
-            return -1;
+        EdgeWeight perform_minimum_cut(GraphPtr G) {
+            return perform_minimum_cut(G, false);
         }
 
-        EdgeWeight cut = G->getMinDegree();
-        std::vector<GraphPtr> graphs;
-        graphs.push_back(G);
+        EdgeWeight perform_minimum_cut(GraphPtr G,
+                                       bool indirect) {
+            if (!G) {
+                return -1;
+            }
 
-        minimum_cut_helpers<GraphPtr>::setInitialCutValues(graphs);
+            EdgeWeight cut = G->getMinDegree();
+            std::vector<GraphPtr> graphs;
+            graphs.push_back(G);
 
-        while (graphs.back()->number_of_nodes() > 10000 &&
-               (graphs.size() == 1 ||
-                (graphs.back()->number_of_nodes() <
-                 graphs[graphs.size() - 2]->number_of_nodes()))) {
-            timer t;
-            G = graphs.back();
-            label_propagation<GraphPtr> lp;
-            std::vector<NodeID> cluster_mapping = lp.propagate_labels(G);
-            auto [mapping, reverse_mapping] =
-                minimum_cut_helpers<GraphPtr>::remap_cluster(
-                    G, cluster_mapping);
-            LOGC(timing) << "LP (total): " << t.elapsedToZero();
+            minimum_cut_helpers<GraphPtr>::setInitialCutValues(graphs);
 
-            contraction::findTrivialCuts(G, &mapping, &reverse_mapping, cut);
-            LOGC(timing) << "Trivial Cut Local Search: " << t.elapsedToZero();
+            while (graphs.back()->number_of_nodes() > 10000 &&
+                   (graphs.size() == 1 ||
+                    (graphs.back()->number_of_nodes() <
+                     graphs[graphs.size() - 2]->number_of_nodes()))) {
+                timer t;
+                G = graphs.back();
+                label_propagation<GraphPtr> lp;
+                std::vector<NodeID> cluster_mapping = lp.propagate_labels(G);
+                auto [mapping, reverse_mapping] =
+                    minimum_cut_helpers<GraphPtr>::remap_cluster(
+                        G, cluster_mapping);
+                LOGC(timing) << "LP (total): " << t.elapsedToZero();
 
-            auto H = contraction::contractGraph(G, mapping, reverse_mapping);
-            graphs.push_back(H);
-            cut = minimum_cut_helpers<GraphPtr>::updateCut(graphs, cut);
-            LOGC(timing) << "Graph Contraction (to "
-                         << graphs.back()->number_of_nodes()
-                         << " nodes): " << t.elapsedToZero();
+                contraction::findTrivialCuts(G, &mapping, &reverse_mapping, cut);
+                LOGC(timing) << "Trivial Cut Local Search: " << t.elapsedToZero();
 
-            union_find uf = tests::prTests12(graphs.back(), cut);
-            graphs.push_back(
-                contraction::fromUnionFind(graphs.back(), &uf, true));
-            cut = minimum_cut_helpers<GraphPtr>::updateCut(graphs, cut);
-            union_find uf2 = tests::prTests34(graphs.back(), cut);
-            graphs.push_back(
-                contraction::fromUnionFind(graphs.back(), &uf2, true));
-            cut = minimum_cut_helpers<GraphPtr>::updateCut(graphs, cut);
-            LOGC(timing) << "Padberg-Rinaldi Tests (to "
-                         << graphs.back()->number_of_nodes()
-                         << " nodes): " << t.elapsedToZero();
+                auto H = contraction::contractGraph(G, mapping, reverse_mapping);
+                graphs.push_back(H);
+                cut = minimum_cut_helpers<GraphPtr>::updateCut(graphs, cut);
+                LOGC(timing) << "Graph Contraction (to "
+                             << graphs.back()->number_of_nodes()
+                             << " nodes): " << t.elapsedToZero();
+
+                union_find uf = tests::prTests12(graphs.back(), cut);
+                graphs.push_back(
+                    contraction::fromUnionFind(graphs.back(), &uf, true));
+                cut = minimum_cut_helpers<GraphPtr>::updateCut(graphs, cut);
+                union_find uf2 = tests::prTests34(graphs.back(), cut);
+                graphs.push_back(
+                    contraction::fromUnionFind(graphs.back(), &uf2, true));
+                cut = minimum_cut_helpers<GraphPtr>::updateCut(graphs, cut);
+                LOGC(timing) << "Padberg-Rinaldi Tests (to "
+                             << graphs.back()->number_of_nodes()
+                             << " nodes): " << t.elapsedToZero();
+            }
+
+            if (graphs.back()->number_of_nodes() > 1) {
+                timer t;
+                noi_minimum_cut<GraphPtr> noi;
+                cut = std::min(cut, noi.perform_minimum_cut(graphs.back(), true));
+
+                LOGC(timing) << "Exact Algorithm:"
+                             << t.elapsedToZero() << " deg: "
+                             << graphs.back()->getMinDegree();
+            }
+
+            if (!indirect && configuration::getConfig()->save_cut)
+                minimum_cut_helpers<GraphPtr>::retrieveMinimumCut(graphs);
+
+            return cut;
         }
-
-        if (graphs.back()->number_of_nodes() > 1) {
-            timer t;
-            noi_minimum_cut<GraphPtr> noi;
-            cut = std::min(cut, noi.perform_minimum_cut(graphs.back(), true));
-
-            LOGC(timing) << "Exact Algorithm:"
-                         << t.elapsedToZero() << " deg: "
-                         << graphs.back()->getMinDegree();
-        }
-
-        if (!indirect && configuration::getConfig()->save_cut)
-            minimum_cut_helpers<GraphPtr>::retrieveMinimumCut(graphs);
-
-        return cut;
-    }
-};
+    };
+}

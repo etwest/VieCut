@@ -22,6 +22,7 @@
 #include "tlx/cmdline_parser.hpp"
 #include "tlx/logger.hpp"
 #include "tlx/string/split.hpp"
+using namespace VieCut;
 
 int main(int argn, char** argv) {
     static constexpr bool debug = false;

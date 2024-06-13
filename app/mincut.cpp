@@ -31,6 +31,7 @@
 #include "tools/random_functions.h"
 #include "tools/string.h"
 #include "tools/timer.h"
+using namespace VieCut;
 
 // typedef graph_access graph_type;
 typedef mutable_graph graph_type;

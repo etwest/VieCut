@@ -35,6 +35,7 @@
 #include "tlx/logger.hpp"
 #include "tlx/string.hpp"
 #include "tools/random_functions.h"
+using namespace VieCut;
 
 bool existsEdge(mutableGraphPtr G, NodeID s, NodeID t) {
     if (s == t) {

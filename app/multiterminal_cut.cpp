@@ -27,6 +27,7 @@
 #include "tlx/logger.hpp"
 #include "tools/random_functions.h"
 #include "tools/timer.h"
+using namespace VieCut;
 
 int main(int argn, char** argv) {
     MPI_Init(&argn, &argv);
