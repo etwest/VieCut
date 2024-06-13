@@ -141,3 +141,8 @@ if(RUN_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif(RUN_TESTS)
+
+# Add a interface library to VieCut code
+add_library(VieCut INTERFACE)
+target_include_directories(VieCut INTERFACE lib)
+
