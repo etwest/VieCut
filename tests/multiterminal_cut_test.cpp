@@ -23,6 +23,7 @@
 #include "data_structure/graph_access.h"
 #include "data_structure/mutable_graph.h"
 #include "gtest/gtest.h"
+using namespace VieCut;
 
 class MultiterminalCutTest : public ::testing::Test {
  public:

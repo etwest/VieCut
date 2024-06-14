@@ -21,6 +21,7 @@
 #include "data_structure/mutable_graph.h"
 #include "gtest/gtest_pred_impl.h"
 #include "tlx/logger.hpp"
+using namespace VieCut;
 
 TEST(CliqueCutTest, SingleClique) {
     mutableGraphPtr G = std::make_shared<mutable_graph>();

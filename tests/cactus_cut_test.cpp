@@ -35,6 +35,7 @@
 #include "io/graph_io.h"
 #include "tlx/logger.hpp"
 #include "tools/random_functions.h"
+using namespace VieCut;
 
 class graph_access;
 class mutable_graph;

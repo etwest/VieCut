@@ -20,6 +20,7 @@
 #include "gtest/gtest_pred_impl.h"
 #include "io/graph_io.h"
 #include "tlx/logger.hpp"
+using namespace VieCut;
 
 graph_access make_circle() {
     graph_access G;

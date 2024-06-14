@@ -24,6 +24,7 @@
 #include "gtest/gtest.h"
 #include "io/graph_io.h"
 #include "tools/vector.h"
+using namespace VieCut;
 
 TEST(PushRelabelTest, EmptyGraph) {
     mutableGraphPtr fG = std::make_shared<mutable_graph>();

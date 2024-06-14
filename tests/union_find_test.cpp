@@ -25,6 +25,7 @@
 #else
 #include "data_structure/union_find.h"
 #endif
+using namespace VieCut;
 
 TEST(UnionFindTest, CreateEmpty) {
     union_find uf(0);

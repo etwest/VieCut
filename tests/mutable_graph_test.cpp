@@ -24,6 +24,7 @@
 #include "gtest/gtest_pred_impl.h"
 #include "io/graph_io.h"
 #include "tlx/logger.hpp"
+using namespace VieCut;
 
 mutable_graph make_circle() {
     mutable_graph G;

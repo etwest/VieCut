@@ -28,6 +28,7 @@
 #include "common/definitions.h"
 #include "gtest/gtest_pred_impl.h"
 #include "io/graph_io.h"
+using namespace VieCut;
 
 template <class GraphPtr>
 class exact_parallel_minimum_cut;

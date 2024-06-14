@@ -25,6 +25,7 @@
 #include "data_structure/graph_access.h"
 #include "gtest/gtest_pred_impl.h"
 #include "io/graph_io.h"
+using namespace VieCut;
 
 TEST(ContractionTest, NoContr) {
 #ifdef PARALLEL

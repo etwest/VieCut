@@ -22,6 +22,7 @@
 #include "data_structure/priority_queues/priority_queue_interface.h"
 #include "data_structure/priority_queues/vecMaxNodeHeap.h"
 #include "gtest/gtest.h"
+using namespace VieCut;
 
 template <typename T>
 class PQTest : public testing::Test { };

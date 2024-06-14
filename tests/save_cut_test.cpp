@@ -33,6 +33,7 @@
 #include "data_structure/graph_access.h"
 #include "gtest/gtest.h"
 #include "io/graph_io.h"
+using namespace VieCut;
 
 template <class GraphPtr>
 class exact_parallel_minimum_cut;

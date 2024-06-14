@@ -15,6 +15,7 @@
 #include "data_structure/graph_access.h"
 #include "gtest/gtest.h"
 #include "io/graph_io.h"
+using namespace VieCut;
 
 graphAccessPtr make_G2() {
     auto G = std::make_shared<graph_access>();
