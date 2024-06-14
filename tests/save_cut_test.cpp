@@ -35,15 +35,17 @@
 #include "io/graph_io.h"
 using namespace VieCut;
 
-template <class GraphPtr>
-class exact_parallel_minimum_cut;
-template <class GraphPtr>
-class viecut;
-class ks_minimum_cut;
-template <class GraphPtr>
-class matula_approx;
-template <class GraphPtr>
-class noi_minimum_cut;
+namespace VieCut {
+    template <class GraphPtr>
+    class exact_parallel_minimum_cut;
+    template <class GraphPtr>
+    class viecut;
+    class ks_minimum_cut;
+    template <class GraphPtr>
+    class matula_approx;
+    template <class GraphPtr>
+    class noi_minimum_cut;
+}
 
 template <typename T>
 class SaveCutTest : public testing::Test { };

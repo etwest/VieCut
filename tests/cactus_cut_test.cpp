@@ -37,8 +37,10 @@
 #include "tools/random_functions.h"
 using namespace VieCut;
 
-class graph_access;
-class mutable_graph;
+namespace VieCut {
+    class graph_access;
+    class mutable_graph;
+}
 
 template <typename T>
 class CactusCutTest : public testing::Test { };
