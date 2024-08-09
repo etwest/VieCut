@@ -162,3 +162,4 @@ endif(RUN_TESTS)
 # Add a interface library to VieCut code
 add_library(VieCut INTERFACE)
 target_include_directories(VieCut INTERFACE lib extlib/tlx extlib/growt)
+target_link_libraries(VieCut INTERFACE tlx)
